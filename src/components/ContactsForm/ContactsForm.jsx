@@ -1,7 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { toast } from 'react-toastify';
 
 import {
   AddContactToForm,
@@ -11,9 +10,7 @@ import {
   Label,
 } from './ContactsForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from '../../redux/contactsSelectors';
 import { addContacts } from 'redux/contactsSlice';
-import { toastifyOptions } from 'components/servis/toastOptions';
 
 const ContactsSchema = Yup.object().shape({
   name: Yup.string()
@@ -32,7 +29,7 @@ const ContactsSchema = Yup.object().shape({
 const initialValue = { name: '', number: '' };
 
 export const ContactsForm = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(state => state.contacts);
   const dispatch = useDispatch();
 
   const handleFindDublicate = ({ name, number }) => {
@@ -49,10 +46,7 @@ export const ContactsForm = () => {
 
   const handleAddContact = ({ name, number }) => {
     if (handleFindDublicate({ name, number })) {
-      return toast.error(
-        `This contact is already in contacts`,
-        toastifyOptions
-      );
+      return alert(`${name} is already in contacts`);
     }
     dispatch(addContacts({ name, number }));
   };
