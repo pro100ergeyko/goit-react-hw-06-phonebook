@@ -11,6 +11,7 @@ import {
 } from './ContactsForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContacts } from 'redux/contactsSlice';
+import { getContacts } from 'redux/selectors';
 
 const ContactsSchema = Yup.object().shape({
   name: Yup.string()
@@ -29,7 +30,7 @@ const ContactsSchema = Yup.object().shape({
 const initialValue = { name: '', number: '' };
 
 export const ContactsForm = () => {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const handleFindDublicate = ({ name, number }) => {

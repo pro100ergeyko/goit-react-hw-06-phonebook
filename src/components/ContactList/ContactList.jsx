@@ -2,16 +2,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IoPersonRemove } from 'react-icons/io5';
 import { deleteContact } from 'redux/contactsSlice';
 import { Btn, Item, Span } from './ContactList.styled';
+import { getContacts, getFilters } from 'redux/selectors';
 
 export const ContactList = () => {
-  const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilters);
 
   const dispatch = useDispatch();
 
   const handleDeletContacts = id => {
-    const newContacts = contacts.filter(contact => contact.id !== id);
-    dispatch(deleteContact(newContacts));
+    dispatch(deleteContact(id));
   };
 
   const getFilteredContact = () => {
